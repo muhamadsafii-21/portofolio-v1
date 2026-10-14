@@ -1,0 +1,17 @@
+Bikin kan saya website portofolio untuk diri saya menggunakan next.js. 
+1. website responsive, interactive, ada motion atau animasi nya 
+2. Website clean code, code tidak berlebihan atau code yang seharusnya bisa pendek tidak perlu panjang''.
+3. Theme website cerah, modern, profesional tidak dark theme. 
+4. antarmuka website tidak ai sloop atau seperti buatan AI atau general AI. Paksa seperti buatan seorang programer profesional.
+5. website terdiri dari 2 halaman utama yakni informasi dan cpanel admin. 
+6. halaman informasi berisi : profile, skill, project mandiri/personal project, contact dan message untuk orang lain bisa mengirimkan pesan ke saya. 
+7. halaman informasi bagian profile di lampirkan juga, email, github, linkedin (dalam bentuk icon)
+8. halaman cpanel admin : semua yang ada di halaman informasi data nya di inputkan dari cpanel admin. 
+9. bagian skill tidak perlu penilain, hanya saja seperti list atau pengelompokkan skill dari yang saya miliki. 
+10. untuk informasi nanti ada foto saya, dalam buletan di awal website portofolio. 
+11. Untuk database nya dirancang support supabase atau postgresql. 
+12. antar muka harus modern, kalau bisa 3D kayak ada animasi animasinya yang tidak terlalu alay atau berlebih, motion aktif. 
+13. Untuk tech stack nya menggunaakn Next.js, dan tech stack lainnya silahkan konfirmasi ke saya. 
+14. Inti dari website ini nanti nya siap di deploy ke vercel, dan ramah SEO. 
+
+Informasi lebih lanjutnya silahkan tanyakan ke saya jangan langsung memulai koding nya, kita diskusikan terlebih dahulu. 
