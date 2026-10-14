@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# folder tidak terkait portfolio (hindari salah deteksi deploy)
+notes/
