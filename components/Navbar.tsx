@@ -3,16 +3,19 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const links = [
-  { href: "#about", label: "Tentang" },
-  { href: "#skills", label: "Skill" },
-  { href: "#projects", label: "Project" },
-  { href: "#contact", label: "Kontak" },
-];
+import { useLang } from "@/lib/language";
+import LanguageToggle from "./LanguageToggle";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { t } = useLang();
+
+  const links = [
+    { href: "#about", label: t("nav.about") },
+    { href: "#skills", label: t("nav.skills") },
+    { href: "#projects", label: t("nav.projects") },
+    { href: "#contact", label: t("nav.contact") },
+  ];
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
@@ -34,20 +37,26 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a
-          href="#contact"
-          className="hidden rounded-full bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 md:block"
-        >
-          Hubungi Saya
-        </a>
+        <div className="hidden items-center gap-3 md:flex">
+          <LanguageToggle />
+          <a
+            href="#contact"
+            className="rounded-full bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
+          >
+            {t("nav.hireMe")}
+          </a>
+        </div>
 
-        <button
-          className="text-slate-700 md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <LanguageToggle compact />
+          <button
+            className="text-slate-700 md:hidden"
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>

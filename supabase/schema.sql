@@ -27,6 +27,11 @@ create table if not exists public.projects (
   id uuid primary key default gen_random_uuid(),
   title text not null,
   description text default '',
+  overview text default '',
+  features text[] not null default '{}',
+  role text,
+  period text,
+  highlights text[] not null default '{}',
   image_url text,
   tags text[] not null default '{}',
   link text,
@@ -34,6 +39,13 @@ create table if not exists public.projects (
   featured boolean not null default false,
   "order" int not null default 0
 );
+
+-- Aman dijalankan ulang untuk project yang tabelnya sudah ada (tambah kolom baru).
+alter table public.projects add column if not exists overview text default '';
+alter table public.projects add column if not exists features text[] not null default '{}';
+alter table public.projects add column if not exists role text;
+alter table public.projects add column if not exists period text;
+alter table public.projects add column if not exists highlights text[] not null default '{}';
 
 create table if not exists public.messages (
   id uuid primary key default gen_random_uuid(),

@@ -1,17 +1,42 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub } from "react-icons/fa6";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ArrowRight } from "lucide-react";
 import { Reveal, SectionHeading } from "./motion";
+import { useLang } from "@/lib/language";
+import ProjectModal from "./ProjectModal";
 import type { Project } from "@/types";
 
 export default function Projects({ projects }: { projects: Project[] }) {
+  const [selected, setSelected] = useState<Project | null>(null);
+  const { t } = useLang();
+
+  // Kunci scroll body & tutup dengan Escape saat modal terbuka
+  useEffect(() => {
+    if (!selected) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelected(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [selected]);
+
   return (
     <section id="projects" className="py-20">
       <div className="mx-auto max-w-6xl px-5">
-        <SectionHeading label="Portofolio" title="Project Pribadi" desc="Beberapa project mandiri yang pernah saya bangun." />
+        <SectionHeading
+          label={t("projects.label")}
+          title={t("projects.title")}
+          desc={t("projects.desc")}
+        />
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => (
@@ -19,7 +44,17 @@ export default function Projects({ projects }: { projects: Project[] }) {
               <motion.article
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-xl"
+                onClick={() => setSelected(p)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setSelected(p);
+                  }
+                }}
+                aria-label={`Lihat detail ${p.title}`}
+                className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition-shadow hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
                   {p.image_url ? (
@@ -32,12 +67,12 @@ export default function Projects({ projects }: { projects: Project[] }) {
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center text-sm text-slate-400">
-                      Tidak ada gambar
+                      {t("projects.noImage")}
                     </div>
                   )}
                   {p.featured && (
                     <span className="absolute left-3 top-3 rounded-full bg-indigo-600 px-2.5 py-1 text-xs font-semibold text-white">
-                      Featured
+                      {t("projects.featured")}
                     </span>
                   )}
                 </div>
@@ -60,26 +95,39 @@ export default function Projects({ projects }: { projects: Project[] }) {
                   </div>
 
                   <div className="mt-5 flex items-center gap-4">
-                    {p.link && (
-                      <a
-                        href={p.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-indigo-600"
-                      >
-                        <ExternalLink size={16} /> Live
-                      </a>
-                    )}
-                    {p.repo && (
-                      <a
-                        href={p.repo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-indigo-600"
-                      >
-                        <FaGithub size={16} /> Kode
-                      </a>
-                    )}
+                    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600">
+                      {t("projects.viewDetail")}
+                      <ArrowRight
+                        size={16}
+                        className="transition-transform group-hover:translate-x-1"
+                      />
+                    </span>
+                    <span className="ml-auto flex items-center gap-4">
+                      {p.link && (
+                        <a
+                          href={p.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          aria-label={`Live demo ${p.title}`}
+                          className="text-slate-400 transition-colors hover:text-indigo-600"
+                        >
+                          <ExternalLink size={16} />
+                        </a>
+                      )}
+                      {p.repo && (
+                        <a
+                          href={p.repo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          aria-label={`Kode ${p.title}`}
+                          className="text-slate-400 transition-colors hover:text-indigo-600"
+                        >
+                          <FaGithub size={16} />
+                        </a>
+                      )}
+                    </span>
                   </div>
                 </div>
               </motion.article>
@@ -87,6 +135,11 @@ export default function Projects({ projects }: { projects: Project[] }) {
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
+      </AnimatePresence>
     </section>
   );
 }
+

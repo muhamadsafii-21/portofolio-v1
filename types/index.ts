@@ -21,6 +21,11 @@ export type Project = {
   id: string;
   title: string;
   description: string;
+  overview: string | null;
+  features: string[] | null;
+  role: string | null;
+  period: string | null;
+  highlights: string[] | null;
   image_url: string | null;
   tags: string[];
   link: string | null;

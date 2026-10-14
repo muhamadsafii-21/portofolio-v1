@@ -6,10 +6,12 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa6";
 import { Send, CheckCircle2, Loader2 } from "lucide-react";
 import { Reveal, SectionHeading } from "./motion";
 import { sendMessage } from "@/app/actions";
+import { useLang } from "@/lib/language";
 import type { Profile } from "@/types";
 
 export default function Contact({ profile }: { profile: Profile }) {
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const { t } = useLang();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,14 +30,18 @@ export default function Contact({ profile }: { profile: Profile }) {
   return (
     <section id="contact" className="border-t border-slate-100 bg-slate-100 py-20">
       <div className="mx-auto max-w-5xl px-5">
-        <SectionHeading label="Kontak" title="Mari Terhubung" desc="Punya pertanyaan atau project? Kirim pesan, saya balas secepatnya." />
+        <SectionHeading
+          label={t("contact.label")}
+          title={t("contact.title")}
+          desc={t("contact.desc")}
+        />
 
         <div className="grid gap-8 md:grid-cols-2">
           <Reveal>
             <div className="flex h-full flex-col justify-center rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-              <h3 className="text-xl font-bold text-slate-900">Info Kontak</h3>
+              <h3 className="text-xl font-bold text-slate-900">{t("contact.infoTitle")}</h3>
               <p className="mt-2 text-sm text-slate-500">
-                Saya terbuka untuk kolaborasi dan peluang baru.
+                {t("contact.infoDesc")}
               </p>
               <ul className="mt-6 space-y-4">
                 {socials.map((s) => (
@@ -64,32 +70,32 @@ export default function Contact({ profile }: { profile: Profile }) {
             >
               <div className="space-y-4">
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700">Nama</label>
+                  <label className="mb-1.5 block text-sm font-medium text-slate-700">{t("contact.name")}</label>
                   <input
                     name="name"
                     required
                     className="w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm outline-none transition-colors focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-                    placeholder="Nama kamu"
+                    placeholder={t("contact.namePlaceholder")}
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
+                  <label className="mb-1.5 block text-sm font-medium text-slate-700">{t("contact.email")}</label>
                   <input
                     name="email"
                     type="email"
                     required
                     className="w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm outline-none transition-colors focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-                    placeholder="email@contoh.com"
+                    placeholder={t("contact.emailPlaceholder")}
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-slate-700">Pesan</label>
+                  <label className="mb-1.5 block text-sm font-medium text-slate-700">{t("contact.message")}</label>
                   <textarea
                     name="message"
                     required
                     rows={4}
                     className="w-full resize-none rounded-lg border border-slate-200 px-4 py-2.5 text-sm outline-none transition-colors focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-                    placeholder="Tulis pesan kamu..."
+                    placeholder={t("contact.messagePlaceholder")}
                   />
                 </div>
               </div>
@@ -103,17 +109,21 @@ export default function Contact({ profile }: { profile: Profile }) {
                 {status === "loading" && <Loader2 size={16} className="animate-spin" />}
                 {status === "done" && <CheckCircle2 size={16} />}
                 {status !== "loading" && status !== "done" && <Send size={16} />}
-                {status === "loading" ? "Mengirim..." : status === "done" ? "Terkirim!" : "Kirim Pesan"}
+                {status === "loading"
+                  ? t("contact.sending")
+                  : status === "done"
+                    ? t("contact.sent")
+                    : t("contact.send")}
               </motion.button>
 
               {status === "done" && (
                 <p className="mt-3 text-center text-sm text-emerald-600">
-                  Terima kasih! Pesan kamu sudah terkirim.
+                  {t("contact.thanks")}
                 </p>
               )}
               {status === "error" && (
                 <p className="mt-3 text-center text-sm text-rose-600">
-                  Gagal mengirim. Silakan coba lagi.
+                  {t("contact.failed")}
                 </p>
               )}
             </form>

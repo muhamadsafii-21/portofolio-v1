@@ -5,9 +5,11 @@ import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa6";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Reveal } from "./motion";
+import { useLang } from "@/lib/language";
 import type { Profile } from "@/types";
 
 export default function Hero({ profile }: { profile: Profile }) {
+  const { t } = useLang();
   return (
     <section className="relative overflow-hidden pt-28 pb-20">
       {/* background accents */}
@@ -37,12 +39,6 @@ export default function Hero({ profile }: { profile: Profile }) {
           <p className="mt-2 text-lg font-semibold text-indigo-600">{profile.role}</p>
         </Reveal>
 
-        <Reveal delay={0.2}>
-          <p className="mx-auto mt-4 max-w-xl leading-relaxed text-slate-600">
-            {profile.bio}
-          </p>
-        </Reveal>
-
         <Reveal delay={0.25}>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <motion.a
@@ -51,7 +47,7 @@ export default function Hero({ profile }: { profile: Profile }) {
               whileTap={{ scale: 0.97 }}
               className="inline-flex items-center gap-1.5 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-slate-700"
             >
-              Lihat Project
+              {t("hero.viewProjects")}
               <ArrowUpRight size={16} />
             </motion.a>
             <motion.a
@@ -60,7 +56,7 @@ export default function Hero({ profile }: { profile: Profile }) {
               whileTap={{ scale: 0.97 }}
               className="inline-flex items-center rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-colors hover:border-indigo-300 hover:text-indigo-600"
             >
-              Hubungi Saya
+              {t("hero.contactMe")}
             </motion.a>
           </div>
         </Reveal>

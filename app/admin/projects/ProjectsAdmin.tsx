@@ -51,8 +51,35 @@ export default function ProjectsAdmin({
           <input name="tags" placeholder="React, Supabase" className={field} />
         </div>
         <div className="sm:col-span-2">
-          <label className="mb-1.5 block text-xs font-medium text-slate-600">Deskripsi</label>
-          <textarea name="description" rows={3} className={field} />
+          <label className="mb-1.5 block text-xs font-medium text-slate-600">Deskripsi Singkat</label>
+          <textarea name="description" rows={2} className={field} placeholder="Muncul di card project" />
+        </div>
+        <div className="sm:col-span-2">
+          <label className="mb-1.5 block text-xs font-medium text-slate-600">
+            Tentang Project (detail){" "}
+            <span className="text-slate-400">— muncul di modal</span>
+          </label>
+          <textarea name="overview" rows={3} className={field} placeholder="Penjelasan panjang project..." />
+        </div>
+        <div className="sm:col-span-2">
+          <label className="mb-1.5 block text-xs font-medium text-slate-600">
+            Fitur Utama <span className="text-slate-400">— 1 baris = 1 fitur</span>
+          </label>
+          <textarea name="features" rows={4} className={field} placeholder={"Fitur 1\nFitur 2\nFitur 3"} />
+        </div>
+        <div>
+          <label className="mb-1.5 block text-xs font-medium text-slate-600">Peran</label>
+          <input name="role" className={field} placeholder="Full-Stack Developer" />
+        </div>
+        <div>
+          <label className="mb-1.5 block text-xs font-medium text-slate-600">Periode</label>
+          <input name="period" className={field} placeholder="2025" />
+        </div>
+        <div className="sm:col-span-2">
+          <label className="mb-1.5 block text-xs font-medium text-slate-600">
+            Hasil / Dampak <span className="text-slate-400">— 1 baris = 1 poin</span>
+          </label>
+          <textarea name="highlights" rows={3} className={field} placeholder={"Waktu muat < 1 detik\nDigunakan 100+ pengguna"} />
         </div>
         <div>
           <label className="mb-1.5 block text-xs font-medium text-slate-600">Link Live</label>

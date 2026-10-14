@@ -51,6 +51,17 @@ export async function addProject(formData: FormData) {
   const { error } = await sb.from("projects").insert({
     title: String(formData.get("title") ?? ""),
     description: String(formData.get("description") ?? ""),
+    overview: (formData.get("overview") as string) || "",
+    features: String(formData.get("features") ?? "")
+      .split("\n")
+      .map((t) => t.trim())
+      .filter(Boolean),
+    role: (formData.get("role") as string) || null,
+    period: (formData.get("period") as string) || null,
+    highlights: String(formData.get("highlights") ?? "")
+      .split("\n")
+      .map((t) => t.trim())
+      .filter(Boolean),
     image_url: (formData.get("image_url") as string) || null,
     tags: String(formData.get("tags") ?? "")
       .split(",")

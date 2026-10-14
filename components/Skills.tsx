@@ -1,4 +1,7 @@
+"use client";
+
 import { Reveal, SectionHeading } from "./motion";
+import { useLang } from "@/lib/language";
 import type { Skill } from "@/types";
 
 function groupByCategory(skills: Skill[]) {
@@ -10,11 +13,16 @@ function groupByCategory(skills: Skill[]) {
 
 export default function Skills({ skills }: { skills: Skill[] }) {
   const groups = groupByCategory(skills);
+  const { t } = useLang();
 
   return (
     <section id="skills" className="border-t border-slate-100 bg-slate-100 py-20">
       <div className="mx-auto max-w-5xl px-5">
-        <SectionHeading label="Keahlian" title="Skill & Teknologi" desc="Teknologi yang saya kuasai dan gunakan sehari-hari." />
+        <SectionHeading
+          label={t("skills.label")}
+          title={t("skills.title")}
+          desc={t("skills.desc")}
+        />
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {Object.entries(groups).map(([category, items], i) => (
