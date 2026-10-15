@@ -17,6 +17,10 @@ async function notifyEmail(payload: {
 }) {
   if (!hasEmail) return;
   try {
+    // Default "onboarding@resend.dev" hanya boleh kirim ke email akun Resend kamu
+    // dan berlaku 3 hari. Setelah verify domain di Resend, set RESEND_FROM_EMAIL
+    // (mis. "Portofolio <halo@domainkamu.com>") lewat env variable.
+    const from = process.env.RESEND_FROM_EMAIL || "Portfolio <onboarding@resend.dev>";
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -24,8 +28,7 @@ async function notifyEmail(payload: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // "onboarding@resend.dev" bisa dipakai untuk testing sebelum verify domain.
-        from: "Portfolio <onboarding@resend.dev>",
+        from,
         to: [process.env.RESEND_TO_EMAIL],
         subject: `Pesan baru dari ${payload.name}`,
         reply_to: payload.email,
